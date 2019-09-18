@@ -10,9 +10,8 @@
 
 #### After that run the docker image by:
 
-`docker run -p 5005:5005 testingdocker:latest`
+`sudo docker run -p 5006:5006 -p 5005:5005 testingdocker:latest`
 
-#### On another terminal, traverse to WebApp/webpage folder and run command
-`python3 -m http.server` note the port : ( most probably 8000 ) and open the browser with URL  
+#### and open the browser with URL  
 
-`http://localhost:{port}`
+`http://localhost:5006`
