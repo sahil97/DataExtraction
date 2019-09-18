@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 
 LABEL maintainer "Sahil Sharma <sahil.sharma071997@gmail.com>"
 
-COPY requirements.txt requirements.txt
+COPY flask/requirements.txt app/flask/requirements.txt
 RUN apt-get update
 RUN apt-get install poppler-utils -y
 RUN apt-get update
@@ -35,13 +35,17 @@ RUN apt-get install curl
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 RUN python3 get-pip.py
 
-RUN pip install -r ./requirements.txt
+RUN pip install -r app/flask/requirements.txt
 
-COPY . /app
+COPY ./flask /app/flask
+COPY ./web /app/web
 WORKDIR /app
 
 # for the flask config
 ENV FLASK_ENV=prod
 
+EXPOSE 8000
 EXPOSE 5005
-ENTRYPOINT [ "python3", "app.py"]
+COPY startscript.sh startscript.sh
+RUN ["chmod", "+x", "./startscript.sh"]
+CMD ["./startscript.sh"]
