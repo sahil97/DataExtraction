@@ -44,7 +44,7 @@ WORKDIR /app
 # for the flask config
 ENV FLASK_ENV=prod
 
-EXPOSE 8000
+EXPOSE 5006
 EXPOSE 5005
 COPY startscript.sh startscript.sh
 RUN ["chmod", "+x", "./startscript.sh"]
