@@ -48,8 +48,8 @@ def extract_data(new_filename):
     'Type','Wood','material','sorting','colour', 'subfloor', 'underlay', 'others', 'Industri', 'eik',
     'rustik', 'full spectre', 'betong', 'plast', 'priming', 'heltre', 'ask', 'natur', 'sparkel', 'ullpapp',
     'sliping', '1-stav', 'lønn', 'select', 'gips', '2mm', 'lakk', '2-stav', 'lerk', 'edel', 'spon', '3mm', 'olje',
-    '3-stav', 'valnøtt', 'sauvage', 'avrettingsmasse', 'aquastop', 'behandlet', 'stavparkett', 'bøk', 
-    'markant', 'GRANAB', 'silencio', 'dim', '6-36mm', 'ubehandlet', 'plank', 'afrikansk eik','exclusive', 
+    '3-stav', 'valnøtt', 'sauvage', 'avrettingsmasse', 'aquastop', 'behandlet', 'stavparkett', 'bøk',
+    'markant', 'GRANAB', 'silencio', 'dim', '6-36mm', 'ubehandlet', 'plank', 'afrikansk eik','exclusive',
     'Nivell',' etafoam', 'børstet', 'fiskebein', 'furu', 'family', 'subfloor', 'gips', 'strukturert', 'lamell',
     'gran', 'trend', 'lim', '1-lags','favorit', '2-lags', '3-lags', 'laminat', 'vinyl', 'vinylklikk'
 ]
@@ -94,10 +94,12 @@ def extract_data(new_filename):
         for word in list(rows['Beskrivelse'].split(' ')):
             if word in word_list:
                 drop = 0
+        if(rows['Post'] == 'Post'):
+            drop = 1
         if(drop != 0):
             df_final.drop([index], axis=0, inplace=True)
     df_final.drop(['index'], axis=1, inplace=True)
-            
+
     return df_final
 
 
@@ -111,7 +113,7 @@ def extract_columns(df):
 def handle_sort(df):
     # Correction for Sorting
     for post in df['Post'].value_counts().keys():
-        if(len(post.split('.')) < 4):
+        if(len(post.split('.')) < 4 and post != 'Post'):
             df['Post'][df.index[df['Post'] == post][0]] += '.00'
 
     sorted_indexes = list(df['Post'].value_counts().keys())
