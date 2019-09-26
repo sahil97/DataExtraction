@@ -1,10 +1,25 @@
-.basic-box{
+.basic-box {
   margin-top: 16px;
   padding: 16px;
   border: 2px solid #eee;
   border-radius: 16px;
+  min-height: 300px;
 }
 
-.submit-btn{
-  margin-top: 16px;
+.submit-btn {
+  height: 48px;
+  margin-top: 32px;
+  width: 100%;
+}
+
+.list-group {
+    max-height: 200px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.highlightWord{
+  font-style: italic;
+  background-color: #FFFF00;
 }

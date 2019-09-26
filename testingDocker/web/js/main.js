@@ -1,7 +1,19 @@
 $(document).ready(() => {
-  console.log('JS working');
 
   let url = "http://0.0.0.0:5005/";
+
+  let wordList = [];
+
+  $.get(url + "wordlist", function(data, status) {
+    wordList = data['words'];
+    data['words'].forEach(word => {
+      let node = document.createElement('li');
+      node.className = "list-group-item";
+      let textNode = document.createTextNode(word);
+      node.appendChild(textNode);
+      $('#list-group').append(node);
+    });
+  });
 
   $('#submit').on('click', e => {
     e.preventDefault();
@@ -30,9 +42,26 @@ $(document).ready(() => {
       "success": function(data) {
         resetTable();
         showData(data);
+        highlight();
       }
     });
   });
+
+
+  function highlighter(word, element) {
+    var rgxp = new RegExp(word, 'g');
+    var repl = '<span class="highlightWord">' + word + '</span>';
+    element.html(element.html().replace(rgxp, repl));
+  }
+
+  function highlight() {
+    $("tbody").find("tr").each(function() {
+      wordList.forEach(word => {
+        highlighter(String(word), $(this).find('td.displayPara'));
+      });
+    })
+
+  }
 
   function resetTable() {
     $('#tableBody').innerHTML = '';
@@ -49,7 +78,7 @@ $(document).ready(() => {
       let Sum = dataElement['Sum'];
 
       let markup = "<tr><td>" +
-        Post + "</td><td>" +
+        Post + "</td><td class='displayPara'>" +
         Beskrivelse + "</td><td>" +
         Enh + "</td><td>" +
         Mengde + "</td><td>" +
