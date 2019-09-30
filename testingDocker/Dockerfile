@@ -47,5 +47,6 @@ ENV FLASK_ENV=prod
 EXPOSE 5006
 EXPOSE 5005
 COPY startscript.sh startscript.sh
+RUN ["python3", "app/flask/db.py"]
 RUN ["chmod", "+x", "./startscript.sh"]
 CMD ["./startscript.sh"]

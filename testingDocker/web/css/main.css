@@ -12,6 +12,31 @@
   width: 100%;
 }
 
+#tags+.tag-editor {
+  font-size: 18px;
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+
+#tags+.tag-editor .tag-editor-tag {
+    border-radius: 2px;
+    margin-left: 8px;
+    padding-top: 2px;
+    padding-bottom: 5px;
+}
+
+#tags+.tag-editor .tag-editor-delete {
+  /* padding-top: 2px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px; */
+  display: none;
+}
+
+.disable-pointer {
+  margin-top: 8px;
+  pointer-events: none; }
+
 .list-group {
     max-height: 200px;
     margin-bottom: 10px;
@@ -22,4 +47,65 @@
 .highlightWord{
   font-style: italic;
   background-color: #FFFF00;
+}
+
+
+.tag-editor .green-tag .tag-editor-tag {
+    color: #45872c;
+    background: #e1f3da;
+}
+
+.tag-editor .red-tag .tag-editor-tag {
+    color: #fff;
+    background: red;
+}
+
+.tag-editor .purple-tag .tag-editor-tag {
+    color: White;
+    background: purple;
+}
+
+.tag-editor .aqua-tag .tag-editor-tag {
+    color: brown;
+    background: aqua;
+}
+
+.tag-editor .peach-tag .tag-editor-tag {
+    color: black;
+    background: #FFDAB9;
+}
+
+.tag-editor .lightblue-tag .tag-editor-tag{
+  color: black;
+  background: #ADD8E6;
+}
+
+.green-tag-text {
+    color: #45872c;
+    background: #e1f3da;
+}
+
+.red-tag-text {
+    color: #fff;
+    background: red;
+}
+
+.purple-tag-text {
+    color: White;
+    background: purple;
+}
+
+.aqua-tag-text {
+    color: brown;
+    background: aqua;
+}
+
+.peach-tag-text {
+    color: black;
+    background: #FFDAB9;
+}
+
+.lightblue-tag-text{
+  color: black;
+  background: #ADD8E6;
 }

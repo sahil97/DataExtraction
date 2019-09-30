@@ -2,8 +2,9 @@ from flask import Flask, request, redirect, url_for, abort
 from flask_cors import CORS, cross_origin
 from flask import jsonify
 import base as base
-
-
+import pymongo
+from bson import Binary, Code
+from bson.json_util import dumps
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -34,19 +35,42 @@ def upload_file():
             return result
 
 
-@app.route('/wordlist', methods=['GET'])
+@app.route('/wordlist', methods=['GET', 'POST'])
 @cross_origin()
 def get_word_list():
-    return jsonify({
-        "words": ['Type','Wood','material','sorting','colour', 'subfloor', 'underlay', 'others', 'Industri', 'eik',
-        'rustik', 'full spectre', 'betong', 'plast', 'priming', 'heltre', 'ask', 'natur', 'sparkel', 'ullpapp',
-        'sliping', '1-stav', 'lønn', 'select', 'gips', '2mm', 'lakk', '2-stav', 'lerk', 'edel', 'spon', '3mm', 'olje',
-        '3-stav', 'valnøtt', 'sauvage', 'avrettingsmasse', 'aquastop', 'behandlet', 'stavparkett', 'bøk',
-        'markant', 'GRANAB', 'silencio', 'dim', '6-36mm', 'ubehandlet', 'plank', 'afrikansk eik','exclusive',
-        'Nivell',' etafoam', 'børstet', 'fiskebein', 'furu', 'family', 'subfloor', 'gips', 'strukturert', 'lamell',
-        'gran', 'trend', 'lim', '1-lags','favorit', '2-lags', '3-lags', 'laminat', 'vinyl', 'vinylklikk'
-    ]
-    }),200
+    try:
+        myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+        mydb = myclient["dataextraction"]
+        mycol = mydb["keywords"]
+    except Exception as e:
+        print(e)
+        return jsonify({
+            "error":e
+        }), 500
+    if(request.method == 'GET'):
+        try:
+            word_list = mycol.find_one()
+            return jsonify({
+                "words":dumps(word_list)
+            }),200
+        except Exception as e:
+            print(e)
+            return jsonify({
+                "error": e
+            }), 500
+    elif(request.method == 'POST'):
+        try:
+            print(request.json)
+            category = request.json['category']
+            print(category)
+            word_object = request.json['wordObject']
+            print(word_object)
+            mycol.update_one({}, {"$set": {category: word_object}})
+            return jsonify({
+                "status": "done"
+            }),200
+        except Exception as e:
+            print(e)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5005, threaded = True)

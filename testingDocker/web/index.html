@@ -17,6 +17,7 @@
   </style>
   <link rel="stylesheet" href="css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/jquery.tag-editor.css" />
 
   <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
@@ -51,8 +52,28 @@
       <div class="col-sm-12 col-md-9">
         <div class="basic-box">
           <h3>Word List</h3>
-          <ul class="list-group" id="list-group">
-          </ul>
+          <form class="form-inline" action="/action_page.php">
+            <div class="form-group">
+              <label for="word">Add word</label>
+              <input type="text" class="form-control" id="word">
+            </div>
+            <div class="form-group">
+              <label for="category">Select Category:</label>
+              <select class="form-control" id="category">
+                <option value="Type">Type</option>
+                <option value="Wood/Material">Wood/Material</option>
+                <option value="sorting">sorting</option>
+                <option value="colour">colour</option>
+                <option value="subfloor">subfloor</option>
+                <option value="uderlay">uderlay</option>
+                <option value="others">others</option>
+              </select>
+            </div>
+            <button type="submit" id="add-word" class="btn btn-primary">Submit</button>
+          </form>
+          <div class="disable-pointer">
+            <input name="tags" id="tags" readonly />
+          </div>
         </div>
       </div>
     </div>
@@ -85,7 +106,10 @@
 
   <script src="js/vendor/bootstrap.min.js"></script>
 
+  <script src="js/vendor/jquery.caret.min.js"></script>
+  <script src="js/vendor/jquery.tag-editor.min.js"></script>
   <script src="js/main.js"></script>
+
 </body>
 
 </html>
