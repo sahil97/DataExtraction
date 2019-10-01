@@ -1,4 +1,4 @@
-# DataExtraction
+<!-- # DataExtraction
 
 #### Navigate to testingDocker folder and create a docker image by:
 
@@ -14,4 +14,22 @@
 
 #### and open the browser with URL  
 
-`http://localhost:5006`
+`http://localhost:5006` -->
+
+
+### Navigate to testingDocker/flask folder and install the requirement file by
+####( preferably in virtualenv )
+
+'pip i -r requirements.txt'
+
+### then initialize the db ( make sure to have mongodb installed )
+
+'python db.py'
+
+### then run the app.py file by
+
+'python app.py'
+
+### now, in another terminal, Navigate to testingDocker/web folder and serve it
+
+'python3 -m http.server'
