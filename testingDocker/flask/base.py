@@ -53,7 +53,6 @@ def extract_data(new_filename):
     'Nivell',' etafoam', 'børstet', 'fiskebein', 'furu', 'family', 'subfloor', 'gips', 'strukturert', 'lamell',
     'gran', 'trend', 'lim', '1-lags','favorit', '2-lags', '3-lags', 'laminat', 'vinyl', 'vinylklikk'
 ]
-    df_final = pd.DataFrame(columns = default_columns)
 
     df_final = pd.DataFrame(columns = default_columns)
 
@@ -61,9 +60,18 @@ def extract_data(new_filename):
         if(i == 1):
             df = tabula.read_pdf(new_filename, pages='1', area=area_temp[i-1])
             for col in df.columns:
-                if((df[col].isnull().sum()/len(df))>0.98):
+                if((df[col].isnull().sum()/len(df))>0.98 and col=='Post'):
                     df.drop([col], axis=1, inplace=True)
 
+            try:
+                df.columns = default_columns
+            except ValueError as e:
+                for col in default_columns:
+                    if(col not in df.columns):
+                        if(col == 'Enhetspris' or col == 'Sum'):
+                            df[col] = ""
+                        else:
+                            continue
             df.columns = default_columns
             # Error correction for column names
     #         df['Post'] = df['Unnamed: 0']
@@ -83,10 +91,19 @@ def extract_data(new_filename):
                     df.drop([col], axis=1, inplace=True)
                 elif((df[col].isnull().sum()/len(df))>0.98):
                     df.drop([col], axis=1, inplace=True)
+
+
+            try:
+                df.columns = default_columns
+            except ValueError as e:
+                for col in default_columns:
+                    if(col not in df.columns):
+                        if(col == 'Enhetspris' or col == 'Sum'):
+                            df[col] = ""
+                        else:
+                            continue
             df.columns = default_columns
-
             df_final_temp = extract_columns(df)
-
             df_final = pd.concat([df_final, df_final_temp])
     df_final = df_final.reset_index()
     for index, rows in df_final.iterrows():
