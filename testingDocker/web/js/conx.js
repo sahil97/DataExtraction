@@ -64,7 +64,7 @@ $(document).ready(() => {
   }
 
   function resetTable() {
-    $('#tableBody').innerHTML = '';
+    $("#tableBody tr").remove();
   }
 
   function showData(dataToShow) {
