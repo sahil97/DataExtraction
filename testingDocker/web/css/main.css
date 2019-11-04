@@ -23,3 +23,19 @@
   font-style: italic;
   background-color: #FFFF00;
 }
+
+.btn-outline{
+  color: #563d7c;
+  background-color: transparent;
+  border-color: #563d7c;
+}
+
+.btn-outline:hover{
+  color: #fff;
+  background-color: #563d7c;
+}
+
+
+.center{
+  text-align: center;
+}

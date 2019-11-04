@@ -31,7 +31,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Data Extraction</a>
+        <a class="navbar-brand" href="index.html">Data Extraction</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
       </div>
@@ -43,12 +43,27 @@
     <div class="row d-flex justify-content-center">
       <div class="col-md-4 col-md-offset-4">
         <div class="basic-box">
-          <h3>Choose company ( parser )</h3>
-          <div class="center">
-            <a href="conx.html" class="btn btn-lg btn-outline">CONX </a>
-            <a href="dfds.html" class="btn btn-lg btn-outline">DFDS </a>
-          </div>
+          <h3>Upload File</h3>
+          <input type="file" id="file-upload">
+          <button class="btn btn-primary submit-btn" id="submit"> Upload file </button>
         </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="data-component basic-box">
+        <h3> Result : </h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th> S. No. </th>
+              <th> Heading </th>
+              <th> Value </th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -58,6 +73,8 @@
     </script>
 
     <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/dfds.js"></script>
 </body>
 
 </html>

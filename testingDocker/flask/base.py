@@ -8,6 +8,7 @@ import tabula
 import math
 from flask import jsonify
 import img_proc as img_proc
+import parser2_funcs as p2
 
 
 def init(file):
@@ -30,8 +31,6 @@ def init(file):
 
     return jsonify({"Message" : "File uploaded successfully",
                     "Result" : result_df.to_dict(orient="records")}), 200
-
-
 
 def extract_data(new_filename):
 
@@ -119,7 +118,6 @@ def extract_data(new_filename):
 
     return df_final
 
-
 def extract_columns(df):
     sorted_indexes = handle_sort(df)
 
@@ -205,3 +203,70 @@ def get_new_df(df, sorted_indexes):
             df_new[df.columns[k]] = list_dict[df.columns[k]]
 
     return df_new
+
+def parse2(file):
+    print("HERE 1")
+    # Getting filename for saving the processed file with the same name
+    filename = secure_filename(file.filename)
+    print('[FILENAME]', filename)
+
+    try:
+        file.save(filename)
+        print("file saved")
+    except Exception as e:
+        print(e)
+    try:
+        result_df = extract_data_2(filename)
+        print("got the new DF")
+    except Exception as e:
+        print(e)
+
+    return jsonify({"Message" : "File uploaded successfully",
+                    "Result" : result_df}), 200
+
+def extract_data_2(filename):
+    specs = pd.read_json('area.json')
+    df_list = []
+    for i in range(len(specs)):
+        df = tabula.read_pdf(filename, pages='1', area=(specs.iloc[i]['y1'], specs.iloc[i]['x1'], specs.iloc[i]['y2'], specs.iloc[i]['x2']))
+        df_list.append(df)
+    packagedesc = []
+    packagedesc.append(
+        {
+            df_list[1].keys()[0] : df_list[1].keys()[1]
+        }
+    )
+
+
+    packagedesc.append(
+        {
+                'Pickup Address': p2.form_sentence(df_list[4])
+        }
+    )
+
+
+    packagedesc.append(
+        {
+                'Delivery Address': p2.form_sentence(df_list[6])
+        }
+    )
+
+    packagedesc.extend(p2.form_dates_time(df_list[5]))
+
+    packagedesc.extend(p2.extract_from_keywords(df_list[7]))
+
+
+    packagedesc.append(
+        {
+                'Goods Table': p2.extract_goods_list(df_list[9])
+        }
+    )
+
+
+    packagedesc.append(
+        {
+                'Remarks': p2.form_sentence(df_list[10])
+        }
+    )
+
+    return packagedesc

@@ -48,5 +48,29 @@ def get_word_list():
     ]
     }),200
 
+
+
+@app.route('/upload2', methods=['POST'])
+@cross_origin()
+def upload_file_2():
+    print("IN ROUTES")
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            print('No file part')
+            return jsonify({"Message" : "File Not Found"}), 200
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            print('No selected file')
+            return redirect(request.url)
+        if file:
+            # saving file in raw folder
+            # TODO: Save it with client name and timestamp
+            result = base.parse2(file)
+            return result
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=5005, threaded = True)
