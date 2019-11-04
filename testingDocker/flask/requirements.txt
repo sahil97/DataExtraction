@@ -1,7 +1,7 @@
 Flask==0.10.1
 Flask-Cors==3.0.7
 numpy==1.16.0
-Werkzeug==0.15.2
+Werkzeug==0.15.3
 tabula-py==1.4.1
 pandas==0.24.2
 opencv-python==3.1.0.4
